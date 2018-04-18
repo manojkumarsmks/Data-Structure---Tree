@@ -50,7 +50,7 @@ public class BinaryTree {
 		}
 	}
 	
-	//InOrder Traversal - Using stack somthing is wrong
+	//InOrder Traversal - Using stack something is wrong
 	public void InOrderIteratively(Node root) {
 		Node current = root;
 		Stack <Node> stack = new Stack<Node>();
@@ -89,6 +89,32 @@ public class BinaryTree {
 		}
 	}
 	
+	//PostOrder Traversal  Iteratively - Using stack
+	public static void PostOrderIteratively(Node root) {
+		Stack <Node> s1 = new Stack<Node>();
+		Stack <Node> s2 = new Stack<Node>();
+		
+		if(root != null)
+			s1.push(root);
+		
+		while(!s1.isEmpty()) {
+			
+			Node current = s1.pop();
+			s2.push(current);		
+			
+			if(current.left != null)
+				s1.push(current.left);
+			
+			if(current.right != null)
+				s1.push(current.right);
+		}
+		
+		while(!s2.isEmpty()) {
+			System.out.println(s2.pop().data);
+		}
+	}
+	
+	
 	// Level Traversal 
 	public static void LevelOrderTraversal(Node root) {
 		Node current = root;	
@@ -126,8 +152,8 @@ public class BinaryTree {
 		 * 		  35    65
 		 * 		 / \     \ 
 		 *		25  45    75
-		 *		/	/ \
-		 *	   15  87 88  
+		 *			/ \
+		 *	       87 88  
 		 * */
 		BinaryTree binaryTree = new BinaryTree();
 		binaryTree.root = new Node(15);
@@ -150,6 +176,9 @@ public class BinaryTree {
 		 * 		  8    12
 		 * 		 / \   / \ 
 		 *		6   9 11 14
+		 *	   /
+		 *	  1
+		 *		    	 
 		 * */
 		BinaryTree binaryTree = new BinaryTree();
 		binaryTree.root = new Node(10);
@@ -160,6 +189,7 @@ public class BinaryTree {
 		binaryTree.root.right.left = new Node(11);
 		binaryTree.root.right.right =new Node(14);
 		
+		
 		return BinaryTree.root;
 		
 	}
@@ -167,7 +197,7 @@ public class BinaryTree {
 	public static void main(String[] args) { 
 		
 		BinaryTree binaryTree = new BinaryTree();
-		InOrderRecursively(BinaryTree3());
+		PostOrderIteratively(BinaryTree1());
 	}
 }
 
