@@ -1,6 +1,7 @@
 // Find the Height of the tree
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 
 public class HeightOfTheTree extends BinaryTree{
@@ -53,9 +54,25 @@ public class HeightOfTheTree extends BinaryTree{
 		}
 		return counter;
 	}
+	
+	// Height of the tree using stack - yet to be done 
+	public static int heightIterativeUsingStack(Node root) {
+		Node current = root;
+		Stack <Node> stack = new Stack<Node>();
+		int heightCounter = 0;
+		
+		if(root != null) {
+			current = root;
+			stack.add(current);
+			stack.add(null);
+		}
+		return heightCounter;
+		
+	}
+	
 
 	public static void main(String[] args) {
-		System.out.println(heightIteratively(BinaryTree2()));
+		System.out.println(heightIterativeUsingStack(BinaryTree2()));
 	}
 
 }

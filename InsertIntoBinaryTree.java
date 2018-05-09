@@ -1,40 +1,60 @@
 //Given an element insert the element into the binary tree and return the root of the tree
-public class InsertIntoBinaryTree{
-	
-	public static Node Insert(Node root, int element) {
-		Node newNode = new Node(element);
-		Node temp = root;
-		
-		//If the root is null, no tree at all
-		if(root == null) {
-			root = newNode;
-			return root;
+public class InsertIntoBinaryTree extends BinaryTree {
+
+	public static Node InsertIteratively(Node root, int element) {
+		Node current = null;
+
+		// If there is no tree, than new element is the root
+		if (root == null) {
+			current = new Node(element);
+			return current;
+		} else {
+			current = root;
 		}
-		
-		while(true) {
-			//Go left if the node to be inserted is less than the current one
-			if(temp.data > element) {
-				if(temp.left != null)
-					temp = temp.left;
+
+		// Find the position in the tree where the new Node fits
+		while (true) {
+			// traverse left if the new element is less than the current one
+			if (current.data < element) {
+				if (current.right != null)
+					current = current.right;
 				else
 					break;
 			}
-			//Go right if the node to be inserted is more than the current one
-			else {
-				if(temp.right != null)
-					temp = temp.right;
+			// traverse right if the new element is greater that the current one
+			else if (current.data > element) {
+				if (current.left != null)
+					current = current.left;
 				else
 					break;
 			}
 		}
-		
-		// Insert the Node based on th value
-		if(temp.data > element) 
-			temp.left = newNode;
+
+		// Current represent the parent of the new element
+		if (current.data > element)
+			current.left = new Node(element);
 		else
-			temp.right = newNode;
-		
-		return root;		
+			current.right = new Node(element);
+
+		// return the root
+		return root;
 	}
 
+	public static Node InsertRecursively(Node root, int element) {
+		
+		if(root == null) {
+			root = new Node(element);
+			return root;
+			
+		}
+		if(root.data < element)
+			return InsertRecursively(root.left, element);
+//		if(root.data > element)
+		else
+			return InsertIteratively(root.right, element);
+	}
+	
+	public static void main(String[] args) {
+		InsertRecursively(BinaryTree1(), 200);
+	}
 }
