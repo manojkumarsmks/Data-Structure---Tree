@@ -1,6 +1,6 @@
+// Basic tree traversal
 import java.util.Stack;
 
-// Basic tree traversal
 public class BinaryTree {
 	
 	private BinaryTreeNode root;
@@ -46,6 +46,38 @@ public class BinaryTree {
 		}
 	}
 	
+	// In order Traversal
+	public void inOrderTraversal(BinaryTreeNode root) {
+		if(root != null) {
+			inOrderTraversal(root.left);
+			System.out.println(root.value);
+			inOrderTraversal(root.right);
+		}
+	}
+	
+	// In Order Iterative
+	public void inOrder(BinaryTreeNode root) {
+		if(root == null)
+			return;
+		BinaryTreeNode temp = root;
+		Stack<BinaryTreeNode> stack = new Stack<>();
+		stack.push(temp);
+		
+		while(true) {
+			if(temp.left != null) {
+				stack.push(temp.left);
+				temp = temp.left;
+			}
+			else {
+				if(stack.isEmpty())
+					break;
+				else {
+					System.out.println(stack.pop().value);
+					temp = temp.right;
+				}
+			}
+		}
+	}
 	public BinaryTreeNode treeExample() {
 		BinaryTreeNode temp = getRoot();
 		temp.value = 1;
@@ -66,7 +98,10 @@ public class BinaryTree {
 		binaryTree.preOrderTraversal(binaryTree.treeExample());
 		System.out.println("Pre Order Traversal Iteratively");
 		binaryTree.preOrderIterative(binaryTree.treeExample());
-		
+		System.out.println("In Order Traversal");
+		binaryTree.inOrderTraversal(binaryTree.treeExample());
+		System.out.println("In Order Traversal Iteratively");
+		binaryTree.inOrderTraversal(binaryTree.treeExample());
 	}
 }
 
