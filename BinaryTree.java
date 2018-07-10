@@ -1,4 +1,6 @@
 // Basic tree traversal
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class BinaryTree {
@@ -109,6 +111,26 @@ public class BinaryTree {
 			System.out.println(stackTwo.pop().value);
 		
 	}
+	// Level Order Traversal
+	public void levelOrder(BinaryTreeNode root) {
+		
+		if(root == null)
+			return;
+		
+		BinaryTreeNode current = root;
+		Queue<BinaryTreeNode> queue = new LinkedList<>();
+		queue.add(current);
+		
+		while(!queue.isEmpty()) {
+			current = queue.poll();
+			System.out.print(current.value + " ");
+			if(current.left != null)
+				queue.add(current.left);
+			if(current.right != null)
+				queue.add(current.right);
+				
+		}
+	}
 	public BinaryTreeNode treeExample() {
 		BinaryTreeNode temp = getRoot();
 		temp.value = 1;
@@ -139,6 +161,9 @@ public class BinaryTree {
 		System.out.println();
 		System.out.println("Post Order Traversal");
 		binaryTree.postOrderTraversal(binaryTree.treeExample());
+		System.out.println();
+		System.out.println("Level Order Traversal");
+		binaryTree.levelOrder(binaryTree.treeExample());
 	}
 }
 
