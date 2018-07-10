@@ -21,7 +21,7 @@ public class BinaryTree {
 	// Pre-order traversal recursive
 	public void preOrderTraversal(BinaryTreeNode root) {
 		if(root != null) {
-			System.out.println(root.value);
+			System.out.print(root.value + " ");
 			preOrderTraversal(root.left);
 			preOrderTraversal(root.right);
 		}
@@ -37,7 +37,7 @@ public class BinaryTree {
 		
 		while(!stack.isEmpty()) {
 			BinaryTreeNode temp = stack.pop();
-			System.out.println(temp.value);
+			System.out.print(temp.value + " ");
 			
 			if(temp.right != null)
 				stack.push(temp.right);
@@ -50,7 +50,7 @@ public class BinaryTree {
 	public void inOrderTraversal(BinaryTreeNode root) {
 		if(root != null) {
 			inOrderTraversal(root.left);
-			System.out.println(root.value);
+			System.out.print(root.value + " ");
 			inOrderTraversal(root.right);
 		}
 	}
@@ -72,11 +72,42 @@ public class BinaryTree {
 				if(stack.isEmpty())
 					break;
 				else {
-					System.out.println(stack.pop().value);
+					System.out.print(stack.pop().value + " ");
 					temp = temp.right;
 				}
 			}
 		}
+	}
+	
+	// Post Order Traversal
+	public void postOrderTraversal(BinaryTreeNode root) {
+		if(root != null) {
+			postOrderTraversal(root.left);
+			postOrderTraversal(root.right);
+			System.out.print(root.value + " ");
+		}
+	}
+	
+	public void postOrderI(BinaryTreeNode root) {
+		if(root == null)
+			return;
+		BinaryTreeNode current = root;
+		Stack<BinaryTreeNode> stackOne = new Stack<>();
+		Stack<BinaryTreeNode> stackTwo = new Stack<>();
+		stackOne.push(root);
+		
+		while(!stackOne.isEmpty()) {
+			current = stackOne.pop();
+			stackTwo.push(current);
+			if(current.left != null)
+				stackOne.push(current);
+			if(current.right != null)
+				stackTwo.push(current);
+		}
+		
+		while(!stackTwo.isEmpty())
+			System.out.println(stackTwo.pop().value);
+		
 	}
 	public BinaryTreeNode treeExample() {
 		BinaryTreeNode temp = getRoot();
@@ -96,12 +127,18 @@ public class BinaryTree {
 		BinaryTree binaryTree = new BinaryTree(temp);
 		System.out.println("Pre Order Traversal");
 		binaryTree.preOrderTraversal(binaryTree.treeExample());
+		System.out.println();
 		System.out.println("Pre Order Traversal Iteratively");
 		binaryTree.preOrderIterative(binaryTree.treeExample());
+		System.out.println();
 		System.out.println("In Order Traversal");
 		binaryTree.inOrderTraversal(binaryTree.treeExample());
+		System.out.println();
 		System.out.println("In Order Traversal Iteratively");
 		binaryTree.inOrderTraversal(binaryTree.treeExample());
+		System.out.println();
+		System.out.println("Post Order Traversal");
+		binaryTree.postOrderTraversal(binaryTree.treeExample());
 	}
 }
 
