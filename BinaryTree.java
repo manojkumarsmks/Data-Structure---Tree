@@ -1,6 +1,13 @@
 // Basic tree traversal
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 public class BinaryTree {
@@ -131,6 +138,64 @@ public class BinaryTree {
 				
 		}
 	}
+	
+	// Vertical Order Traversal
+	public void vertialOrder(BinaryTreeNode root) {
+		if(root == null)
+			return;
+		Queue<BinaryTreeNode> nodes = new LinkedList<>();
+		Queue<Integer> horizontalDist = new LinkedList<>();
+		
+		Map<Integer, ArrayList<BinaryTreeNode>> map = new HashMap<>();
+		nodes.add(root); 
+		horizontalDist.add(0);
+		
+		while(!nodes.isEmpty()) {
+			BinaryTreeNode current = nodes.poll();
+			Integer hd = horizontalDist.poll();
+			
+			if(map.containsKey(hd)){
+				ArrayList<BinaryTreeNode> temp = map.get(hd);
+				temp.add(current);
+				map.put(hd, temp);
+			}
+			else {
+				ArrayList<BinaryTreeNode> temp = new ArrayList<>();
+				temp.add(current);
+				map.put(hd, temp);
+			}
+
+			if(current.left != null) {
+				nodes.add(current.left);
+				horizontalDist.add(hd-1);
+			}
+			if(current.right != null) {
+				nodes.add(current.right);
+				horizontalDist.add(hd+1);
+			}
+		}
+		
+	
+		Set<Integer> set = map.keySet();
+		List<Integer> list = new LinkedList<>();
+		list.addAll(set);
+		Collections.sort(list, new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o1.compareTo(o2);
+			}
+		});
+		
+		for(Integer integer:list) {
+			ArrayList<BinaryTreeNode> temp = map.get(integer);
+			System.out.print(temp.get(0).value+" ");
+		}
+		
+	}
+	
+	
+	
 	public BinaryTreeNode treeExample() {
 		BinaryTreeNode temp = getRoot();
 		temp.value = 1;
@@ -142,12 +207,38 @@ public class BinaryTree {
 		temp.right.right = new BinaryTreeNode(7);
 		return temp;
 	}
+	
+	public BinaryTreeNode treeExample1() {
+		BinaryTreeNode temp = getRoot();
+		temp.value = 1;
+		temp.left = new BinaryTreeNode(2);
+		temp.right = new BinaryTreeNode(3);
+		temp.left.left = new BinaryTreeNode(4);
+		temp.left.right = new BinaryTreeNode(5);
+		temp.right.left = new BinaryTreeNode(6);
+		temp.right.right = new BinaryTreeNode(7);
+		temp.right.left.right = new BinaryTreeNode(8);
+		temp.right.right.right = new BinaryTreeNode(9);
+		return temp;
+		
+	}
+	
+	public BinaryTreeNode treeExample2() {
+		BinaryTreeNode temp = getRoot();
+		temp.value = 1;
+		temp.right = new BinaryTreeNode(2);
+		temp.right.right = new BinaryTreeNode(5);
+		temp.right.right.right = new BinaryTreeNode(6);
+		temp.right.right.left = new BinaryTreeNode(3);
+		temp.right.right.left.right = new BinaryTreeNode(4); 
+		return temp;
+	}
 
 	
 	public static void main(String[] args) {
 		BinaryTreeNode temp = new BinaryTreeNode(1);
 		BinaryTree binaryTree = new BinaryTree(temp);
-		System.out.println("Pre Order Traversal");
+		/*System.out.println("Pre Order Traversal");
 		binaryTree.preOrderTraversal(binaryTree.treeExample());
 		System.out.println();
 		System.out.println("Pre Order Traversal Iteratively");
@@ -164,6 +255,9 @@ public class BinaryTree {
 		System.out.println();
 		System.out.println("Level Order Traversal");
 		binaryTree.levelOrder(binaryTree.treeExample());
+		System.out.println();*/
+		System.out.println("Vertical Order Traversal");
+		binaryTree.vertialOrder(binaryTree.treeExample2());
 	}
 }
 
