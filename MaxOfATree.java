@@ -1,6 +1,5 @@
-import java.util.Stack;
-
 // Find the maximum in a binary tree
+import java.util.Stack;
 
 public class MaxOfATree extends BinaryTree{
 	
