@@ -14,6 +14,10 @@ public class BinaryTree {
 	
 	private BinaryTreeNode root;
 	
+	public BinaryTree() {
+		
+	}
+	
 	// constructor
 	public BinaryTree(BinaryTreeNode root) {
 		this.root = root;
@@ -237,7 +241,8 @@ public class BinaryTree {
 	
 	public static void main(String[] args) {
 		BinaryTreeNode temp = new BinaryTreeNode(1);
-		BinaryTree binaryTree = new BinaryTree(temp);
+		BinaryTree binaryTree = new BinaryTree();
+		binaryTree.root = temp;
 		/*System.out.println("Pre Order Traversal");
 		binaryTree.preOrderTraversal(binaryTree.treeExample());
 		System.out.println();

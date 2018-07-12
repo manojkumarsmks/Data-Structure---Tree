@@ -1,84 +1,62 @@
-// Find the maximum in a binary tree
 import java.util.Stack;
+
+// Find the maximum in a binary tree
 
 public class MaxOfATree extends BinaryTree{
 	
-	// Max - Recursively
-	public static int MaxRecursively(Node root) {
-		int max = Integer.MIN_VALUE;
+	// Recursively 
+	public int maxOfBST(BinaryTreeNode root) {
+		int maxValue = Integer.MIN_VALUE;
 		if(root != null) {
-			int left = MaxRecursively(root.left);
-			int right = MaxRecursively(root.right);
+			int leftMax = maxOfBST(root.left);
+			int rightMax = maxOfBST(root.right);
+			if(leftMax > rightMax)
+				maxValue = leftMax;
+			else if(leftMax < rightMax)
+				maxValue = rightMax;
 			
-			if(left > right)
-				max = left;
-			if(right > left)
-				max = right;
-			if(root.data > max)
-				max = root.data;
+			if(root.value > maxValue)
+				maxValue = root.value;
 		}
-		
-		return max;
+		return maxValue;
 	}
 	
-	// InOrder Traversal for Maximum Tree
-	// InOrder method
-	public static int MaxInterativelyInOrder(Node root) {
-		Node current = null;
-		int max = Integer.MIN_VALUE;
-		Stack<Node> stack = new Stack<Node>();
-		if(root != null)
-			current = root;
-		else 
-			return max;
+	// Iterative 
+	public int maxOfBSTItr(BinaryTreeNode root) {
+		if(root == null)
+			return -1;
 		
-		while(true) {
-			
-			if(current != null) {
-				stack.push(current);
-				current = current.left;
-			}
-			else {
-				if(stack.isEmpty())
-					break;
-				current = stack.pop();
-				if(current.data > max)
-					max = current.data;
-				current = current.right;
-			}
-		}
-		return max;
-	}
-	
-	
-
-	// Traverse the tree, keep replacing the max value
-	// PreOrder method
-	public static int MaxIterativelyPreOrder(Node root) {
-		int max = Integer.MIN_VALUE;
-		Node current = null;
-		Stack<Node> stack = new Stack<Node>();
-		if(root != null) {
-			current = root;
-			stack.add(current);
-		}
-		else {
-			return max;
-		}
-		while(!stack.isEmpty()) {
-			current = stack.pop();
-			if(current.data > max)
-				max = current.data;
-			if(current.right != null)
-				stack.add(current.right);
+		Stack<BinaryTreeNode> stackOne = new Stack<>();
+		Stack<BinaryTreeNode> stackTwo = new Stack<>();
+		BinaryTreeNode current = root;
+		stackOne.push(current);
+		
+		while(!stackOne.isEmpty()) {
+			current = stackOne.pop();
+			stackTwo.push(current);
 			if(current.left != null)
-				stack.add(current.left);		
+				stackOne.push(current.left);
+			if(current.right != null)
+				stackOne.push(current.right);
+		}
+		int max = stackTwo.pop().value;
+		while(!stackTwo.isEmpty()) {
+			current = stackTwo.pop();
+			if(max < current.value)
+				max = current.value;
 		}
 		
 		return max;
+		
 	}
 	
 	public static void main(String[] args) {
-			System.out.println(MaxInterativelyInOrder(BinaryTree.BinaryTree3()));
+		MaxOfATree maxOfATree = new MaxOfATree();
+		maxOfATree.setRoot(new BinaryTreeNode(1));
+		System.out.println(maxOfATree.maxOfBST(maxOfATree.treeExample()));
+		System.out.println(maxOfATree.maxOfBSTItr(maxOfATree.treeExample1()));
 	}
+
 }
+
+
