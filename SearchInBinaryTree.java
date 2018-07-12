@@ -1,80 +1,53 @@
-//Return true if you find the element in the binary tree
 import java.util.Stack;
 
+//Return true if you find the element in the binary tree
 public class SearchInBinaryTree extends BinaryTree{
 	
-	//Recursively Find the Elements
-	public static boolean FindElementRecursive(Node root, int element) {
+	// Recursive 
+	public boolean searchRecursively(BinaryTreeNode root, int data) {
 		if(root != null) {
-			if(root.data == element) {
+			
+			if(root.value == data) 
 				return true;
-			}
-			else {
-				return FindElementRecursive(root.left, element) || FindElementRecursive(root.right, element);
-			}
+			
+			boolean left = searchRecursively(root.left, data);
+			boolean right = searchRecursively(root.right, data);
+			
+			return left || right;
 		}
 		return false;
+			
 	}
 	
-	//Find Element Iteratively - using PreOrder
-	public static boolean FindElementsPreOrder(Node root, int element) {
-		Node current = root;
-		Stack <Node> stack = new Stack<Node>();
-		
-		if(root == null) {
+	// PreOrder Search
+	public boolean searchPreOrderItr(BinaryTreeNode root, int data) {
+		if(root == null)
 			return false;
-		}
-		else {
-			stack.add(current);
-		}
+		
+		BinaryTreeNode current = root;
+		Stack<BinaryTreeNode> stack = new Stack<>();
+		stack.push(current);
 		
 		while(!stack.isEmpty()) {
-			current = stack.pop();
-			
-			if(current.data == element)
+			current =stack.pop();
+			if(current.value == data)
 				return true;
-			if(current.right!= null) {
+			
+			if(current.right != null)
 				stack.push(current.right);
-			}
-			if(current.left != null) {
+			if(current.left != null)
 				stack.push(current.left);
-			}
+			
 		}
-		
 		return false;
-	}
-	
-	// Find Element Iteratively - using InOrder
-	public static boolean FindElementsInOrder(Node root, int element) {
-		Node current = root;
-		Stack<Node> stack = new Stack<Node> ();
-		int max = Integer.MIN_VALUE;
-		
-		while(true) {
-			if(current!= null) {
-				if(current.data == element)
-					return true;
-				stack.push(current);
-				current = current.left;
-			}
-			else {
-				if(stack.isEmpty())
-					break;
-				else {
-					current = stack.pop();
-					System.out.println("Current data "+current.data);
-					current = current.right;
-				}
-			}
-		}
-		
-		return false;
+
 	}
 
 	public static void main(String[] args) {
 		SearchInBinaryTree searchInBinaryTree = new SearchInBinaryTree();
-		//System.out.println(FindElementsPreOrder(searchInBinaryTree.BinaryTree1(), 8));
-		System.out.println(FindElementsPreOrder(searchInBinaryTree.BinaryTree2(), 145));
+		searchInBinaryTree.setRoot(new BinaryTreeNode(1));
+		System.out.println(searchInBinaryTree.searchPreOrderItr(searchInBinaryTree.treeExample(), 7));
+		System.out.println(searchInBinaryTree.searchRecursively(searchInBinaryTree.treeExample(), 17));
 	}
 
 }
