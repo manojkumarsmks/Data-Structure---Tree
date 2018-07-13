@@ -1,4 +1,5 @@
 // Find the Height of the tree
+//https://leetcode.com/problems/maximum-depth-of-binary-tree/description/#
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -7,24 +8,24 @@ import java.util.Stack;
 public class HeightOfTheTree extends BinaryTree{
 	
 	// Height of the tree - Recursively
-	public static int heightRecursively(Node root) {
+	public static int heightRecursively(BinaryTreeNode root) {
+		int height = 0;
 		if(root != null) {
-			//Get the height of the left tree
-			int leftHeight = heightRecursively(root.left);
-			//Get the height of the right tree
-			int rightHeight = heightRecursively(root.right);
+			int leftHeight = heightIteratively(root.left);
+			int rightHeight = heightIteratively(root.right);
 			
-			//Return the one that's larger
-			return Math.max(leftHeight, rightHeight) + 1;
+			height = Math.max(leftHeight, rightHeight) +1;
 		}
-		return 0;
+		return height;
+		
 	}
+		
 	
 	// Height of the tree Iteratively
-	public static int heightIteratively(Node root) {
-		Node current = root;
+	public static int heightIteratively(BinaryTreeNode root) {
+		BinaryTreeNode current = root;
 		// Level Order Traversal
-		Queue<Node> queue = new LinkedList<Node>();
+		Queue<BinaryTreeNode> queue = new LinkedList<BinaryTreeNode>();
 		int counter = 0;
 		
 		// Using null as a separator of the levels
@@ -56,9 +57,9 @@ public class HeightOfTheTree extends BinaryTree{
 	}
 	
 	// Height of the tree using stack - yet to be done 
-	public static int heightIterativeUsingStack(Node root) {
-		Node current = root;
-		Stack <Node> stack = new Stack<Node>();
+	public static int heightIterativeUsingStack(BinaryTreeNode root) {
+		BinaryTreeNode current = root;
+		Stack <BinaryTreeNode> stack = new Stack<BinaryTreeNode>();
 		int heightCounter = 0;
 		
 		if(root != null) {
@@ -72,7 +73,9 @@ public class HeightOfTheTree extends BinaryTree{
 	
 
 	public static void main(String[] args) {
-		System.out.println(heightIterativeUsingStack(BinaryTree2()));
+		HeightOfTheTree heightOfTheTree = new HeightOfTheTree();
+		heightOfTheTree.setRoot(new BinaryTreeNode(1));
+		System.out.println(heightRecursively(heightOfTheTree.treeExample1()));
 	}
 
 }
